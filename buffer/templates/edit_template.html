@@ -13,7 +13,7 @@ const TEXT_CHANGE_TIMEOUT = 500;
 window.onload = function() {
     const bufferTextarea = document.getElementById("buffer-textarea");
     bufferTextarea.timeout = null;
-    var service = new WebSocket("wss://echo.websocket.org"); //test url
+    var service = new WebSocket("ws://" + window.location.host + "/buffer/edit"); //test url
 
     service.onopen = function() {
         service.send(JSON.stringify({role:"editor"}));

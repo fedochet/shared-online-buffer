@@ -8,7 +8,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-    var service = new WebSocket("wss://echo.websocket.org");//test url
+    var service = new WebSocket("ws://" + window.location.host + "/buffer/read");//test url
     service.onmessage = function(event) {
         console.log("get: " + event.data);
     }  
