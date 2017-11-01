@@ -13,15 +13,32 @@ const TEXT_CHANGE_TIMEOUT = 500;
 window.onload = function() {
     const bufferTextarea = document.getElementById("buffer-textarea");
     bufferTextarea.timeout = null;
+    var service = new WebSocket("wss://echo.websocket.org"); //test url
+
+    service.onclose = function() {
+        console.log("closed");
+    }
+    service.onerror = function() {
+        console.log("error");
+    }
+    service.onmessage = function(event) {
+        console.log("sent data are: " + event.data);
+    }
 
     bufferTextarea.onkeydown = function(e) {
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => {
-            console.log("Input value: ", this.value);
+            //console.log("Input value: ", this.value);
+            var payload = {
+                text: this.value
+            };
+            payload = JSON.stringify(payload);
+            service.send(payload);
         }, TEXT_CHANGE_TIMEOUT);
     };
 };
 </script>
+
 
 
 
