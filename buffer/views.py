@@ -15,3 +15,5 @@ def index(request):
 def read(request):
     return render_to_response('read_template.html')
 
+def edit(request):
+    return render_to_response('edit_template.html')
