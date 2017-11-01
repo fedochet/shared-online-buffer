@@ -11,9 +11,9 @@ $(document).ready(function() {
     var service = new WebSocket("wss://echo.websocket.org");//test url
     service.onmessage = function(event) {
         console.log("get: " + event.data);
-    }
+    }  
     service.onopen = function() {
-        service.send("yeee i am here");
+        service.send(JSON.stringify({role:"reader"}));
     }
     service.onclose = function() {
         console.log("closed");
