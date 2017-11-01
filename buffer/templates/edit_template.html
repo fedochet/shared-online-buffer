@@ -15,6 +15,10 @@ window.onload = function() {
     bufferTextarea.timeout = null;
     var service = new WebSocket("wss://echo.websocket.org"); //test url
 
+    service.onopen = function() {
+        service.send(JSON.stringify({role:"editor"}));
+    }
+
     service.onclose = function() {
         console.log("closed");
     }
