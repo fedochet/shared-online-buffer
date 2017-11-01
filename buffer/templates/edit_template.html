@@ -5,49 +5,40 @@
     <title>Shared Buffer</title>
 </head>
 
-
-
 <script type="text/javascript">
-const TEXT_CHANGE_TIMEOUT = 500;
+    const TEXT_CHANGE_TIMEOUT = 500;
 
-window.onload = function() {
-    const bufferTextarea = document.getElementById("buffer-textarea");
-    bufferTextarea.timeout = null;
-    var service = new WebSocket("ws://" + window.location.host + "/buffer/edit"); //test url
+    window.onload = function () {
+        const bufferTextarea = document.getElementById("buffer-textarea");
+        bufferTextarea.timeout = null;
+        const service = new WebSocket("ws://" + window.location.host + "/buffer/edit");
 
-    service.onopen = function() {
-        service.send(JSON.stringify({role:"editor"}));
-    }
+        service.onopen = function () {
+            service.send(JSON.stringify({role: "editor"}));
+        };
 
-    service.onclose = function() {
-        console.log("closed");
-    }
-    service.onerror = function() {
-        console.log("error");
-    }
-    service.onmessage = function(event) {
-        console.log("sent data are: " + event.data);
-    }
+        service.onclose = function () {
+            console.log("closed");
+        };
+        service.onerror = function () {
+            console.log("error");
+        };
+        service.onmessage = function (event) {
+            console.log("sent data are: " + event.data);
+        };
 
-    bufferTextarea.onkeydown = function(e) {
-        clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => {
-            //console.log("Input value: ", this.value);
-            var payload = {
-                text: this.value
-            };
-            payload = JSON.stringify(payload);
-            service.send(payload);
-        }, TEXT_CHANGE_TIMEOUT);
+        bufferTextarea.onkeydown = function (e) {
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+                const payload = JSON.stringify({text: this.value});
+                service.send(payload);
+            }, TEXT_CHANGE_TIMEOUT);
+        };
     };
-};
 </script>
 
-
-
-
 <body>
-    <textarea id="buffer-textarea" rows="4" cols="50"></textarea>
+<textarea id="buffer-textarea" rows="4" cols="50"></textarea>
 </body>
 
 </html>
