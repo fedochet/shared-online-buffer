@@ -10,12 +10,12 @@
 	const TEXT_CHANGE_TIMEOUT = 500; 
 
 	const bufferTextarea = document.getElementById("buffer-textarea");
-	bufferTextarea.timeout = null
+	bufferTextarea.timeout = null;
 
 	bufferTextarea.onkeydown = function (e) {
-		clearTimeout(this.timeout)
+		clearTimeout(this.timeout);
 		this.timeout = setTimeout(() => {
-			console.log("Input value: ", this.value)
+			console.log("Input value: ", this.value);
 		}, TEXT_CHANGE_TIMEOUT);
 	};
 </script>
