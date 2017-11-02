@@ -11,7 +11,12 @@ from buffer.models import Text
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("Hello, world! Buffers are waiting!")
+    texts_count = len(Text.objects.all())
+    if texts_count < 5:
+         links = Text.objects.all()
+    else:
+         links = Text.objects.all()[:-5]
+    return render_to_response('index.html', {'links': links})
   
   
 def read(request: HttpRequest) -> HttpResponse:
