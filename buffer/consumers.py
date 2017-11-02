@@ -3,6 +3,7 @@ import json
 import logging
 from channels.channel import Group
 from channels.message import Message
+from buffer.views import create, update
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +32,8 @@ def ws_message(message: Message):
     else:
         LATEST_TEXT = json.loads(message.content['text'])['message']
         Group(READERS_GROUP).send(text_with_message(LATEST_TEXT))
+        text = json.loads(message.content['text'])['text']
+        update(1, text, "name") #TODO:create record; then write to real id, now writes to id=1
 
 
 def ws_disconnect(message: Message):
