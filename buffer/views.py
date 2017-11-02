@@ -9,17 +9,19 @@ from django.shortcuts import render_to_response
 
 from buffer.models import Text
 
+BufferType = str
+
 
 def index(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Hello, world! Buffers are waiting!")
   
   
-def read(request: HttpRequest) -> HttpResponse:
-    return render_to_response('read_template.html')
+def read(request: HttpRequest, buffer_id: BufferType) -> HttpResponse:
+    return render_to_response('read_template.html', {'buffer_id': buffer_id})
 
 
-def edit(request: HttpRequest) -> HttpResponse:
-    return render_to_response('edit_template.html')
+def edit(request: HttpRequest, buffer_id: BufferType) -> HttpResponse:
+    return render_to_response('edit_template.html', {'buffer_id': buffer_id})
 
 
 def create(text, name):
@@ -49,7 +51,7 @@ def lookup_private(token):
     if obj:
          return obj[0].text
     else:
-         raise ValueError('Private key is not valid') 
+         raise ValueError('Private key is not valid')
 
 
 def lookup_public(token):
@@ -57,13 +59,11 @@ def lookup_public(token):
     if obj:
          return obj[0].text
     else:
-         raise ValueError('Public key is not valid') 
+         raise ValueError('Public key is not valid')
 
 
 def gen(n):
-    return ''.join(random.choice(string.ascii_uppercase + 
-                                 string.ascii_lowercase + 
+    return ''.join(random.choice(string.ascii_uppercase +
+                                 string.ascii_lowercase +
                                  string.digits)
                                  for _ in range(n))
-    
-    

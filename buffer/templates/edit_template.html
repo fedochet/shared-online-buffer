@@ -8,15 +8,19 @@
 <script type="text/javascript">
     const TEXT_CHANGE_TIMEOUT = 500;
 
+    getIdFromPath = function () {
+        const pathComponents = window.location.pathname.split('/');
+        return pathComponents[pathComponents.length - 1];
+    };
+
     window.onload = function () {
         const bufferTextarea = document.getElementById("buffer-textarea");
+
         bufferTextarea.timeout = null;
         const service = new WebSocket("ws://" + window.location.host + "/buffer/edit");
-
         service.onopen = function () {
-            service.send(JSON.stringify({role: "editor"}));
+            service.send(JSON.stringify({first_role: "editor"}));
         };
-
         service.onclose = function () {
             console.log("closed");
         };
@@ -33,7 +37,7 @@
         bufferTextarea.onkeydown = function (e) {
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
-                const payload = JSON.stringify({message: this.value});
+                const payload = JSON.stringify({role: 'editor', buffer_id: getIdFromPath(), message: this.value});
                 service.send(payload);
             }, TEXT_CHANGE_TIMEOUT);
         };
