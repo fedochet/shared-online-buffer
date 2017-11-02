@@ -38,6 +38,7 @@ def ws_message(message: Message):
                 close_websocket(message)
     else:
         text = json.loads(message.content['text'])['message']
+        logger.info(text)
         update_text(TEXT_ID, text, "name")  # TODO:create record; then write to real id, now writes to id=1
         Group(READERS_GROUP).send(text_with_message(get_text(TEXT_ID).text))
 
@@ -63,7 +64,7 @@ def remove_editor_if_matches(message):
 
 def is_first_message(message: Message) -> bool:
     text_object = json.loads(message.content['text'])
-    return 'role' in text_object
+    return 'first_role' in text_object
 
 
 def get_message_group(message: Message) -> Group:
