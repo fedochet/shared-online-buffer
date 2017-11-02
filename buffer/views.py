@@ -13,11 +13,11 @@ def index(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Hello, world! Buffers are waiting!")
   
   
-def read(request: HttpRequest, _: BufferType) -> HttpResponse:
+def read(request: HttpRequest, _: str) -> HttpResponse:
     return render_to_response('read_template.html')
 
 
-def edit(request: HttpRequest, private_token: BufferType) -> HttpResponse:
+def edit(request: HttpRequest, private_token: str) -> HttpResponse:
     context = { 'public_key': lookup_private(private_token).public }
     return render_to_response('edit_template.html', context=context)
 
