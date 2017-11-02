@@ -4,6 +4,7 @@ import logging
 
 from channels.channel import Group
 from channels.message import Message
+from channels.sessions import channel_session
 
 from buffer.editors_storage import get_buffer_editor, add_buffer_editor, \
     remove_buffer_editors
@@ -17,10 +18,10 @@ EDITORS_GROUP = 'editor'
 TEXT_ID = 1
 
 
+@channel_session
 def ws_connect(message: Message):
     logger.info("{} connected by websocket!".format(message.reply_channel))
     accept_websocket(message)
-    # message.reply_channel.send(text_with_message(get_text(TEXT_ID).text))
 
 
 def is_reader(message) -> bool:
@@ -33,16 +34,20 @@ def get_buffer_token(message) -> str:
     return text_object['buffer_id']
 
 
+@channel_session
 def ws_message(message: Message):
     logger.info("Recieved message {} from {}".format(message.content, message.reply_channel))
     token = get_buffer_token(message)
     if is_reader(message):
         text_object = lookup_public(token)
-        get_readers_group(text_object.id).add(message.reply_channel)
+        buffer_readers_group = get_readers_group(text_object.id)
+        message.channel_session['group_name'] = buffer_readers_group.name
+        buffer_readers_group.add(message.reply_channel)
         message.reply_channel.send(text_with_message(text_object.text))
     else:
         text_object = lookup_private(token)
         if get_buffer_editor(text_object.id) is None:
+            message.channel_session['buffer_id'] = text_object.id
             add_buffer_editor(text_object.id, str(message.reply_channel))
             send_text_to(message.reply_channel, text_object.text)
         elif not registered_editor(message, text_object):
@@ -54,10 +59,15 @@ def ws_message(message: Message):
             send_text_to_readers(text_object.id, updated_text)
 
 
+@channel_session
 def ws_disconnect(message: Message):
     logger.info("Websocket {} disconnected!".format(message.reply_channel))
-    remove_editor_if_matches(message)
-    Group(READERS_GROUP).discard(message.reply_channel)
+    if 'buffer_id' in message.channel_session:
+        logger.info("Websocket {} removed from editors!".format(message.reply_channel))
+        remove_editor_if_matches(message.channel_session['buffer_id'], message)
+    if 'group_name' in message.channel_session:
+        logger.info("Websocket {} removed from groups!".format(message.reply_channel))
+        Group(message.channel_session['group_name']).discard(message.reply_channel)
 
 
 def registered_editor(message, text_object):
@@ -84,23 +94,9 @@ def get_readers_group(text_id: int) -> Group:
     return Group("readers_{}".format(text_id))
 
 
-def remove_editor_if_matches(message):
-    if get_buffer_editor(TEXT_ID) == str(message.reply_channel):
-        remove_buffer_editors(TEXT_ID)
-
-
-def is_first_message(message: Message) -> bool:
-    text_object = json.loads(message.content['text'])
-    return 'first_role' in text_object
-
-
-def get_message_group(message: Message) -> Group:
-    text_object = json.loads(message.content['text'])
-    if 'role' in text_object:
-        sender_role = text_object['role']
-        return Group(sender_role)
-
-    return Group(READERS_GROUP)
+def remove_editor_if_matches(buffer_id, message):
+    if get_buffer_editor(buffer_id) == str(message.reply_channel):
+        remove_buffer_editors(buffer_id)
 
 
 def text_with_message(message):
