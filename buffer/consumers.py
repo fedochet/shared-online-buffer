@@ -20,7 +20,7 @@ TEXT_ID = 1
 
 def ws_connect(message: Message):
     logger.info("{} connected by websocket!".format(message.reply_channel))
-    message.reply_channel.send({"accept": True})
+    accept_websocket(message)
     message.reply_channel.send(text_with_message(get_text(TEXT_ID).text))
 
 
@@ -33,9 +33,9 @@ def ws_message(message: Message):
         else:
             if get_buffer_editor(TEXT_ID) is None:
                 add_buffer_editor(TEXT_ID, str(message.reply_channel))
-                Group(READERS_GROUP).send(text_with_message(get_text(TEXT_ID).text))
+                message.reply_channel.send(text_with_message(get_text(TEXT_ID).text))
             else:
-                message.reply_channel.send({"close": True})
+                close_websocket(message)
     else:
         text = json.loads(message.content['text'])['message']
         update_text(TEXT_ID, text, "name")  # TODO:create record; then write to real id, now writes to id=1
@@ -44,8 +44,21 @@ def ws_message(message: Message):
 
 def ws_disconnect(message: Message):
     logger.info("Websocket {} disconnected!".format(message.reply_channel))
-    remove_buffer_editors(TEXT_ID)
+    remove_editor_if_matches(message)
     Group(READERS_GROUP).discard(message.reply_channel)
+
+
+def accept_websocket(message):
+    message.reply_channel.send({"accept": True})
+
+
+def close_websocket(message):
+    message.reply_channel.send({"close": True})
+
+
+def remove_editor_if_matches(message):
+    if get_buffer_editor(TEXT_ID) == str(message.reply_channel):
+        remove_buffer_editors(TEXT_ID)
 
 
 def is_first_message(message: Message) -> bool:
