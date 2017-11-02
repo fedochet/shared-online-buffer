@@ -19,6 +19,7 @@
 
         service.onclose = function () {
             console.log("closed");
+            alert("The connection was closed! Someone might be editing this page already.")
         };
         service.onerror = function () {
             console.log("error");
