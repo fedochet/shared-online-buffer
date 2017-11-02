@@ -20,7 +20,12 @@
         bufferTextarea.timeout = null;
         const service = new WebSocket("ws://" + window.location.host + "/buffer/edit");
         service.onopen = function () {
-            service.send(JSON.stringify({first_role: "editor"}));
+            console.log(event);
+            const payload = JSON.stringify({
+                role: 'editor',
+                buffer_id: getIdFromPath(),
+            });
+            service.send(payload);
         };
         service.onclose = function () {
             console.log("closed");
@@ -57,7 +62,7 @@
     </td></tr>
     <tr><td>
         <label id="public_url">Share this with your slaves:
-            <a href="localhost:8000/buffer/read/{{ public_key }}">
+            <a href="/buffer/read/{{ public_key }}">
                 https://buffersonline.com/read/{{ public_key }}
             </a>
         </label>

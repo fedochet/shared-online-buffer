@@ -5,6 +5,11 @@
 </head>
 
 <script type="text/javascript">
+    getIdFromPath = function () {
+        const pathComponents = window.location.pathname.split('/');
+        return pathComponents[pathComponents.length - 1];
+    };
+
     window.onload = function () {
         const service = new WebSocket("ws://" + window.location.host + "/buffer/read");
         const bufferContent = document.getElementById('buffer-textarea');
@@ -16,7 +21,11 @@
         };
         service.onopen = function (event) {
             console.log(event);
-            service.send(JSON.stringify({first_role: "reader"}));
+            const payload = JSON.stringify({
+                role: 'reader',
+                buffer_id: getIdFromPath()
+            });
+            service.send(payload)
         };
         service.onclose = function () {
             console.log("closed");
