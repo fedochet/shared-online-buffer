@@ -30,6 +30,14 @@ def ws_message(message: Message):
         else:
             Group(READERS_GROUP).send(text_with_message(LATEST_TEXT))
     else:
+        Group(READERS_GROUP).send({
+            'text': json.dumps({
+                'message': message.content['text'],
+                'sender': message.reply_channel.name
+            })
+        })
+        text = json.loads(message.content['text'])['text']
+        update(1, text, "name") #TODO:create record; then write to real id, now writes to id=1
         LATEST_TEXT = json.loads(message.content['text'])['message']
         Group(READERS_GROUP).send(text_with_message(LATEST_TEXT))
         text = json.loads(message.content['text'])['text']
