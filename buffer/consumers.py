@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
+
 from channels.channel import Group
 from channels.message import Message
 
-from buffer.editors_storage import add_buffer_editor
 from buffer.views import get as get_text
 from buffer.views import update as update_text
 
@@ -19,7 +19,7 @@ TEXT_ID = 1
 def ws_connect(message: Message):
     logger.info("{} connected by websocket!".format(message.reply_channel))
     message.reply_channel.send({"accept": True})
-    message.reply_channel.send(text_with_message(get_text(TEXT_ID)['text']))
+    message.reply_channel.send(text_with_message(get_text(TEXT_ID).text))
 
 
 def ws_message(message: Message):
@@ -29,11 +29,11 @@ def ws_message(message: Message):
         if group.name == READERS_GROUP:
             group.add(message.reply_channel)
         else:
-            Group(READERS_GROUP).send(text_with_message(get_text(TEXT_ID)['text']))
+            Group(READERS_GROUP).send(text_with_message(get_text(TEXT_ID).text))
     else:
         text = json.loads(message.content['text'])['message']
         update_text(TEXT_ID, text, "name")  # TODO:create record; then write to real id, now writes to id=1
-        Group(READERS_GROUP).send(text_with_message(get_text(TEXT_ID)['text']))
+        Group(READERS_GROUP).send(text_with_message(get_text(TEXT_ID).text))
 
 
 def ws_disconnect(message: Message):
