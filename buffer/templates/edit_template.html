@@ -21,6 +21,11 @@
         const service = new WebSocket("ws://" + window.location.host + "/buffer/edit");
         service.onopen = function () {
             console.log(event);
+            const payload = JSON.stringify({
+                role: 'editor',
+                buffer_id: getIdFromPath(),
+            });
+            service.send(payload);
         };
         service.onclose = function () {
             console.log("closed");
