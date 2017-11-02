@@ -9,9 +9,6 @@ import string
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    print(get(1)['private'])
-    #print(lookup_public('wggjioe'))
-    print(lookup_private('XwW8HbCxu'))
     return HttpResponse("Hello, world! Buffers are waiting!")
   
   
@@ -34,13 +31,7 @@ def create(text, name):
 def get(id):
     '''Reads record in bd. Returns dict with keys: id, text and name'''
     get_text = Text.objects.get(id = id)
-    rec = {'id' : get_text.id, 
-           'text' : get_text.text,
-           'name' : get_text.name,
-           'private' :  get_text.private,
-           'public' :  get_text.public,
-           }
-    return(rec)
+    return(get_text)
 
 def update(id, text, name):
     '''Updates record in bd, 3 args - id, text and name'''
@@ -52,14 +43,14 @@ def lookup_private(token):
     if obj:
          return obj[0].text
     else:
-         return "Private key is not valid"
+         raise ValueError('Private key is not valid') 
 
 def lookup_public(token):
     obj = Text.objects.filter(public = token)
     if obj:
          return obj[0].text
     else:
-         return "Public key is not valid"
+         raise ValueError('Public key is not valid') 
 
 def gen(n):
     return ''.join(random.choice(string.ascii_uppercase + 
