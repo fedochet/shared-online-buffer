@@ -38,7 +38,11 @@
         bufferTextarea.onkeydown = function (e) {
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
-                const payload = JSON.stringify({role: 'editor', buffer_id: getIdFromPath(), message: this.value});
+                const payload = JSON.stringify({
+                    role: 'editor',
+                    buffer_id: getIdFromPath(),
+                    message: this.value
+                });
                 service.send(payload);
             }, TEXT_CHANGE_TIMEOUT);
         };

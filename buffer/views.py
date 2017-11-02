@@ -9,18 +9,15 @@ from django.shortcuts import render_to_response
 
 from buffer.models import Text
 
-BufferType = str
-
-
 def index(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Hello, world! Buffers are waiting!")
-  
-  
-def read(request: HttpRequest, buffer_id: BufferType) -> HttpResponse:
+
+
+def read(request: HttpRequest, buffer_id: str) -> HttpResponse:
     return render_to_response('read_template.html', {'buffer_id': buffer_id})
 
 
-def edit(request: HttpRequest, buffer_id: BufferType) -> HttpResponse:
+def edit(request: HttpRequest, buffer_id: str) -> HttpResponse:
     return render_to_response('edit_template.html', {'buffer_id': buffer_id})
 
 
@@ -46,18 +43,18 @@ def update(id, text, name):
     upd_text.save()
 
 
-def lookup_private(token):
+def lookup_private(token) -> Text:
     obj = Text.objects.filter(private = token)
     if obj:
-         return obj[0].text
+         return obj[0]
     else:
          raise ValueError('Private key is not valid')
 
 
-def lookup_public(token):
+def lookup_public(token) -> Text:
     obj = Text.objects.filter(public = token)
     if obj:
-         return obj[0].text
+         return obj[0]
     else:
          raise ValueError('Public key is not valid')
 
