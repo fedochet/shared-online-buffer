@@ -3,6 +3,8 @@ import json
 import logging
 from channels.channel import Group
 from channels.message import Message
+
+from buffer.editors_storage import add_buffer_editor
 from buffer.views import get as get_text
 from buffer.views import update as update_text
 
