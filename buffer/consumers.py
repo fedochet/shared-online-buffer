@@ -7,8 +7,7 @@ from channels.message import Message
 
 from buffer.editors_storage import get_buffer_editor, add_buffer_editor, \
     remove_buffer_editors
-from buffer.views import get as get_text
-from buffer.views import update as update_text
+from buffer.views import get as get_text, lookup_private
 
 logger = logging.getLogger(__name__)
 
@@ -37,10 +36,12 @@ def ws_message(message: Message):
             else:
                 close_websocket(message)
     else:
-        text = json.loads(message.content['text'])['message']
-        logger.info(text)
-        update_text(TEXT_ID, text, "name")  # TODO:create record; then write to real id, now writes to id=1
-        Group(READERS_GROUP).send(text_with_message(get_text(TEXT_ID).text))
+        updated_text = json.loads(message.content['text'])['message']
+        private_token = json.loads(message.content['text'])['buffer_id']
+        text_to_change = lookup_private(private_token)
+        text_to_change.text = updated_text
+        text_to_change.save()
+        Group(READERS_GROUP).send(text_with_message(updated_text))
 
 
 def ws_disconnect(message: Message):
