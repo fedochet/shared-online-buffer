@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shared Buffer</title>
+</head>
+<body>
+Welcome to Shared Buffers! <br>
+Press the button below to create a new buffer. <br>
+<form action="new">
+    <input type="submit" value="Create new buffer"/>
+</form>
+
+{% for link in edit_links %}
+<a href="edit/{{ link }}">{{ link }}</a><br>
+{% endfor %}
+
+</body>
+</html>
