@@ -16,7 +16,6 @@
         };
         service.onopen = function (event) {
             console.log(event);
-            service.send(JSON.stringify({first_role: "reader"}));
         };
         service.onclose = function () {
             console.log("closed");
