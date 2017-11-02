@@ -15,6 +15,7 @@
 
     window.onload = function () {
         const bufferTextarea = document.getElementById("buffer-textarea");
+        const publicKeyHolder = document.getElementById("public_url");
 
         bufferTextarea.timeout = null;
         const service = new WebSocket("ws://" + window.location.host + "/buffer/edit");
@@ -45,7 +46,18 @@
 </script>
 
 <body>
-<textarea id="buffer-textarea" rows="4" cols="50"></textarea>
+<table>
+    <tr><td>
+       <textarea id="buffer-textarea" rows="4" cols="50"></textarea>
+    </td></tr>
+    <tr><td>
+        <label id="public_url">Share this with your slaves:
+            <a href="localhost:8000/buffer/read/{{ public_key }}">
+                https://buffersonline.com/read/{{ public_key }}
+            </a>
+        </label>
+    </td></tr>
+</table>
 </body>
 
 </html>
