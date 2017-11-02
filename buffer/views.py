@@ -9,9 +9,6 @@ from django.shortcuts import render_to_response, redirect
 
 from buffer.models import Text
 
-BufferType = str
-
-
 def index(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Hello, world! Buffers are waiting!")
   
@@ -30,7 +27,6 @@ def new(request: HttpRequest) -> HttpResponse:
     new_id = create('', 'newrecord')
     created_record = get(new_id)
     return redirect('/buffer/edit/' + created_record.private)
-
 
 def create(text, name):
     '''Creates record in bd, 2 args - text and name. Generate priv-pub links
@@ -62,10 +58,10 @@ def lookup_private(token) -> Text:
          raise ValueError('Private key is not valid')
 
 
-def lookup_public(token):
+def lookup_public(token) -> Text:
     obj = Text.objects.filter(public = token)
     if obj:
-         return obj[0].text
+         return obj[0]
     else:
          raise ValueError('Public key is not valid')
 
