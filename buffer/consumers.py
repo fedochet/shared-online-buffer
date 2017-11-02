@@ -3,45 +3,35 @@ import json
 import logging
 from channels.channel import Group
 from channels.message import Message
-from buffer.views import create, update
+from buffer.views import get as get_text
+from buffer.views import update as update_text
 
 logger = logging.getLogger(__name__)
 
 READERS_GROUP = 'reader'
 EDITORS_GROUP = 'editor'
 
-LATEST_TEXT = ""
+TEXT_ID = 1
 
 
 def ws_connect(message: Message):
-    global LATEST_TEXT
     logger.info("{} connected by websocket!".format(message.reply_channel))
     message.reply_channel.send({"accept": True})
-    message.reply_channel.send(text_with_message(LATEST_TEXT))
+    message.reply_channel.send(text_with_message(get_text(TEXT_ID)['text']))
 
 
 def ws_message(message: Message):
-    global LATEST_TEXT
     logger.info("Recieved message {} from {}".format(message.content, message.reply_channel))
     if is_first_message(message):
         group = get_message_group(message)
         if group.name == READERS_GROUP:
             group.add(message.reply_channel)
         else:
-            Group(READERS_GROUP).send(text_with_message(LATEST_TEXT))
+            Group(READERS_GROUP).send(text_with_message(get_text(TEXT_ID)['text']))
     else:
-        Group(READERS_GROUP).send({
-            'text': json.dumps({
-                'message': message.content['text'],
-                'sender': message.reply_channel.name
-            })
-        })
-        text = json.loads(message.content['text'])['text']
-        update(1, text, "name") #TODO:create record; then write to real id, now writes to id=1
-        LATEST_TEXT = json.loads(message.content['text'])['message']
-        Group(READERS_GROUP).send(text_with_message(LATEST_TEXT))
-        text = json.loads(message.content['text'])['text']
-        update(1, text, "name") #TODO:create record; then write to real id, now writes to id=1
+        text = json.loads(message.content['text'])['message']
+        update_text(TEXT_ID, text, "name")  # TODO:create record; then write to real id, now writes to id=1
+        Group(READERS_GROUP).send(text_with_message(get_text(TEXT_ID)['text']))
 
 
 def ws_disconnect(message: Message):
