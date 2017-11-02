@@ -5,21 +5,28 @@ import random
 import string
 
 from django.http import HttpResponse, HttpRequest
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 
 from buffer.models import Text
 
 def index(request: HttpRequest) -> HttpResponse:
     return HttpResponse("Hello, world! Buffers are waiting!")
+  
+  
+def read(request: HttpRequest, _: BufferType) -> HttpResponse:
+    return render_to_response('read_template.html')
 
 
-def read(request: HttpRequest, buffer_id: str) -> HttpResponse:
-    return render_to_response('read_template.html', {'buffer_id': buffer_id})
+def edit(request: HttpRequest, private_token: BufferType) -> HttpResponse:
+    context = { 'public_key': lookup_private(private_token).public }
+    return render_to_response('edit_template.html', context=context)
 
 
-def edit(request: HttpRequest, buffer_id: str) -> HttpResponse:
-    return render_to_response('edit_template.html', {'buffer_id': buffer_id})
-
+def new(request: HttpRequest) -> HttpResponse:
+    print("New buf")
+    new_id = create('', 'newrecord')
+    created_record = get(new_id)
+    return redirect('/buffer/edit/' + created_record.private)
 
 def create(text, name):
     '''Creates record in bd, 2 args - text and name. Generate priv-pub links
