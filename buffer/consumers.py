@@ -9,27 +9,28 @@ logger = logging.getLogger(__name__)
 READERS_GROUP = 'reader'
 EDITORS_GROUP = 'editor'
 
+LATEST_TEXT = ""
+
 
 def ws_connect(message: Message):
+    global LATEST_TEXT
     logger.info("{} connected by websocket!".format(message.reply_channel))
     message.reply_channel.send({"accept": True})
-    Group('chat').add(message.reply_channel)
+    message.reply_channel.send(text_with_message(LATEST_TEXT))
 
 
 def ws_message(message: Message):
+    global LATEST_TEXT
     logger.info("Recieved message {} from {}".format(message.content, message.reply_channel))
     if is_first_message(message):
         group = get_message_group(message)
         if group.name == READERS_GROUP:
             group.add(message.reply_channel)
-
+        else:
+            Group(READERS_GROUP).send(text_with_message(LATEST_TEXT))
     else:
-        Group(READERS_GROUP).send({
-            'text': json.dumps({
-                'message': message.content['text'],
-                'sender': message.reply_channel.name
-            })
-        })
+        LATEST_TEXT = json.loads(message.content['text'])['message']
+        Group(READERS_GROUP).send(text_with_message(LATEST_TEXT))
 
 
 def ws_disconnect(message: Message):
@@ -50,3 +51,10 @@ def get_message_group(message: Message) -> Group:
 
     return Group(READERS_GROUP)
 
+
+def text_with_message(message):
+    return {
+        'text': json.dumps({
+            'message': message,
+        })
+    }

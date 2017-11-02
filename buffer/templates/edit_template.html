@@ -25,12 +25,15 @@
         };
         service.onmessage = function (event) {
             console.log("sent data are: " + event.data);
+            const input = JSON.parse(event.data);
+            console.log("parse: " + input.message);
+            bufferTextarea.value = input.message;
         };
 
         bufferTextarea.onkeydown = function (e) {
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
-                const payload = JSON.stringify({text: this.value});
+                const payload = JSON.stringify({message: this.value});
                 service.send(payload);
             }, TEXT_CHANGE_TIMEOUT);
         };

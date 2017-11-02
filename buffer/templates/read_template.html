@@ -11,13 +11,11 @@
         service.onmessage = function (event) {
             console.log("get: " + event.data);
             const input = JSON.parse(event.data);
-            const inputMessage = JSON.parse(input.message);
-            console.log("parse: " + inputMessage.text);
-            if (inputMessage.text) {
-                bufferContent.value = inputMessage.text;
-            }
+            console.log("parse: " + input.message);
+            bufferContent.value = input.message;
         };
-        service.onopen = function () {
+        service.onopen = function (event) {
+            console.log(event);
             service.send(JSON.stringify({role: "reader"}));
         };
         service.onclose = function () {
