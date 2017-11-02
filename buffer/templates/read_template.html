@@ -7,8 +7,15 @@
 <script type="text/javascript">
     window.onload = function () {
         const service = new WebSocket("ws://" + window.location.host + "/buffer/read");
+        const bufferContent = document.getElementById('buffer-textarea');
         service.onmessage = function (event) {
             console.log("get: " + event.data);
+            const input = JSON.parse(event.data);
+            const inputMessage = JSON.parse(input.message);
+            console.log("parse: " + inputMessage.text);
+            if (inputMessage.text) {
+                bufferContent.value = inputMessage.text;
+            }
         };
         service.onopen = function () {
             service.send(JSON.stringify({role: "reader"}));
