@@ -61,20 +61,15 @@
 <body>
 <div class="my-container">
 
-<h1 id="buffer-title">This is Buffer</h1>
-<table>
-    <tr><td>
-       <textarea id="buffer-textarea" class="read-textarea" rows="4" cols="150">
-       </textarea>
-    </td></tr>
-    <tr><td>
-        <label id="public_url">Share this with your slaves:
-            <a href="/buffer/read/{{ public_key }}">
-                https://buffersonline.com/read/{{ public_key }}
-            </a>
-        </label>
-    </td></tr>
-</table>
+    <h1 id="buffer-title">This is Buffer</h1>
+    <textarea id="buffer-textarea" class="read-textarea" rows="4" cols="10">
+    </textarea>
+    <label id="public_url">Share this with your slaves:
+        <a href="/buffer/read/{{ public_key }}">
+            https://buffersonline.com/read/{{ public_key }}
+        </a>
+    </label>
+
 </div>
 </body>
 

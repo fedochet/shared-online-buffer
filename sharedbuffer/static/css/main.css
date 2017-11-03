@@ -1,15 +1,18 @@
 .my-container {
-  width: 50%; margin: 0 25% 0 25%
+  width: 50%;
+  margin: 0 25% 0 25%;
+  text-align: left;
 }
 
-h1 {
+h1, h2, h3 {
   float: left;
+  color: #e0a800;
 }
 
 body {
-  background-color:#ce3635;
+  background-color: #6c757d;
   text-align: center;
-  color:#fff;
+  color: #fff;
   padding-top:10em;
 }
 
@@ -19,16 +22,15 @@ html {
 
 .read-textarea {
   border-radius: 6px;
+  font-size: 150%;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
   width:100%;
 }
 
-.edit-textarea {
-  border-radius: 6px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
-  width:100%;
+#public_url {
+  font-size: 150%;
 }
 
-a:link {
+#public_url a {
     color: #e0a800;
 }

@@ -34,13 +34,13 @@
 <br>
 <br>
 <br>
-<h3> Last Shared Buffers </h3>
-<div>
+<h3> Recently Shared Buffers </h3>
     {% for l in links %}
-        {{ l.name }}<a href="/buffer/edit/{{ l.private }}">
+        <div class="buffer-link">
+        <a href="/buffer/edit/{{ l.private }}">
         http://buffer/edit/{{ l.private }} </a> <br>
+        </div>
     {% endfor %}
-</div>
 
 </body>
 </html>
