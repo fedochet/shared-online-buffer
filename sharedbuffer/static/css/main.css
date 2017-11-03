@@ -1,0 +1,36 @@
+.my-container {
+  width: 50%;
+  margin: 0 25% 0 25%;
+  text-align: left;
+}
+
+h1, h2, h3 {
+  float: left;
+  color: #e0a800;
+}
+
+body {
+  background-color: #6c757d;
+  text-align: center;
+  color: #fff;
+  padding-top:10em;
+}
+
+html {
+  font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+}
+
+.read-textarea {
+  border-radius: 6px;
+  font-size: 150%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+  width:100%;
+}
+
+#public_url {
+  font-size: 150%;
+}
+
+#public_url a {
+    color: #e0a800;
+}
