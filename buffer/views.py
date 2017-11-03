@@ -15,11 +15,11 @@ def index(request: HttpRequest) -> HttpResponse:
     if texts_count < 5:
          links = Text.objects.all()
     else:
-         links = Text.objects.all()[:-5]
+         links = Text.objects.all()
     return render_to_response('index.html', {'links': links})
   
   
-def read(request: HttpRequest) -> HttpResponse:
+def read(request: HttpRequest, _) -> HttpResponse:
     return render_to_response('read_template.html')
 
 
