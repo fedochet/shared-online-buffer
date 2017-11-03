@@ -2,44 +2,44 @@
 <html>
 
 {% load static %}
-  <head>
+<head>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <title>Online Shared Buffer</title>
-    
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"
+          rel="stylesheet">
     <link href="{% static 'css/typing.css' %}" rel="stylesheet">
+    <link href="{% static 'css/landing-page.css' %}" rel="stylesheet">
     <script src="{% static 'js/typing.js' %}"></script>
-
-    <style> 
-    .btn{min-width:250px; min-height:50px;}
-    </style>
-
     <!-- Bootstrap core CSS -->
 
-  </head>
+</head>
 
 <body>
 <h1>
-  <a href="" class="typewrite" data-period="2000" data-type='[ "Hi, I am Online Shared Buffer.", "I like Kuzya.", "I Love to Code.", "I Love Big Buffers." ]'>
-    <span class="wrap"></span>
-  </a>
+    <a href="" class="typewrite" data-period="2000"
+       data-type='[ "Hi, I am Online Shared Buffer.", "I like Kuzya.", "I Love to Code.", "I Love Big Buffers." ]'>
+        <span class="wrap"></span>
+    </a>
 </h1>
 <br>
-<a href="new" type="button" class="btn btn-info btn-lg">Create buffer</a>
+<a href="new" class="btn btn-info btn-lg new-buffer-btn">Create buffer</a>
 <br>
 <br>
 <br>
 <br>
-<div>
 <h3> Last Shared Buffers </h3>
-{% for l in links %}
-    {{ l.name }}  <a href="/buffer/edit/{{ l.private  }}"> http://buffer/edit/{{ l.private }} </a> <br>
-{% endfor %}
+<div>
+    {% for l in links %}
+        {{ l.name }}<a href="/buffer/edit/{{ l.private }}">
+        http://buffer/edit/{{ l.private }} </a> <br>
+    {% endfor %}
 </div>
 
 </body>
