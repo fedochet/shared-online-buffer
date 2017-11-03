@@ -1,0 +1,52 @@
+<html>
+
+{% load static %}
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Online Shared Buffer</title>
+    
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/typing.css' %}" rel="stylesheet">
+    <script src="{% static 'js/typing.js' %}"></script>
+
+    <style> 
+    .btn{min-width:250px; min-height:50px;}
+    </style>
+
+    <!-- Bootstrap core CSS -->
+
+  </head>
+
+<body>
+<h1>
+  <a href="" class="typewrite" data-period="2000" data-type='[ "Hi, I am Online Shared Buffer.", "I like Kuzya.", "I Love to Code.", "I Love Big Buffers." ]'>
+    <span class="wrap"></span>
+    
+          
+  </a>
+
+
+</h1>
+</br>
+<a href="#" type="button" class="btn btn-info btn-lg">Create buffer</a>
+</br>
+</br>
+</br>
+</br>
+</br>
+<div>
+<h3> Last Shared Buffers </h3>
+<ul>
+{% for l in links %}
+    <li>  {{ l.name }}  <a href="/read/{{ l.public  }}"> http://buffer/read/{{ l.public }} </a></li>
+{% endfor %}
+</ul>
+</div>
+
+</body>
+</html>
