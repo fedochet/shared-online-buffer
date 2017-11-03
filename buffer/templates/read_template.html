@@ -8,6 +8,9 @@
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
 </head>
 
+<script src="https://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
+{#<link href="https://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"/>#}
+
 <script type="text/javascript">
     getIdFromPath = function () {
         const pathComponents = window.location.pathname.split('/');
@@ -15,14 +18,84 @@
     };
 
     window.onload = function () {
+
+        let reader = null;
+
+        YUI().use(
+            'aui-ace-editor',
+            function (Y) {
+                reader = new Y.AceEditor(
+                    {
+                        boundingBox: '#code-reader',
+                        height: '200',
+                        mode: 'java',
+                        value: 'System.out.println(System.in.getln(System.what.isit("kakoune\\n")))',
+                        width: '700',
+                        readOnly: true
+                    }
+                ).render();
+
+                const mode = Y.one('#mode');
+
+                if (mode) {
+                    const contents = {
+                        haskell: 'newtype Arr2 e1 e2 a = Arr2 { getArr2 :: e1 -> e2 -> a }\n' +
+                        'newtype Arr3 e1 e2 e3 a = Arr3 { getArr3 :: e1 -> e2 -> e3 -> a }\n' +
+                        '\n' +
+                        'instance Functor (Arr2 e1 e2) where\n' +
+                        '  fmap f (Arr2 g) = Arr2 (((.) . (.)) f g)\n' +
+                        '\n' +
+                        'instance Functor (Arr3 e1 e2 e3) where\n' +
+                        '  fmap f (Arr3 g) = Arr3 (((.) . (.) . (.)) f g)\n' +
+                        '\n' +
+                        'instance Applicative (Arr2 e1 e2) where\n' +
+                        '  pure x = Arr2 (\\e1 e2 -> x)\n' +
+                        '  -- (<*>) :: (e1 -> e2 -> a -> b) -> (e1 -> e2 -> a) -> (e1 -> e2 -> b)\n' +
+                        '  (<*>) (Arr2 f) (Arr2 g) = Arr2 (\\e1 e2 -> f e1 e2 (g e1 e2))\n' +
+                        '\n' +
+                        'instance Applicative (Arr3 e1 e2 e3) where\n' +
+                        '  pure x = Arr3 (\\e1 e2 e3 -> x)\n' +
+                        '  (<*>) (Arr3 f) (Arr3 g) = Arr3 (\\e1 e2 e3 -> f e1 e2 e3 (g e1 e2 e3))\n',
+                        java: 'System.out.println(System.in.getln(System.what.isit("kakoune\\n")))',
+                        python: 'print(peremennaya6, functsiya(massiv[5,81764]))'
+                    };
+
+                    let currentMode = 'java';
+
+                    const updateValue = function () {
+                        reader.set('value', contents[currentMode]);
+                    };
+
+                    mode.on(
+                        'change',
+                        function (event) {
+                            currentMode = this.val();
+                            reader.set('mode', currentMode);
+{#                            updateValue();#}
+                        }
+                    );
+
+                    service.onmessage = function (event) {
+                        console.log("get: " + event.data);
+                        const input = JSON.parse(event.data);
+                        console.log("parse: " + input.message);
+                        reader.set('value', input.message);
+                    };
+                }
+
+
+            }
+        );
+
+        const codeReader = document.getElementById("code-reader");
         const service = new WebSocket("ws://" + window.location.host + "/buffer/read");
         const bufferContent = document.getElementById('buffer-textarea');
-        service.onmessage = function (event) {
-            console.log("get: " + event.data);
-            const input = JSON.parse(event.data);
-            console.log("parse: " + input.message);
-            bufferContent.value = input.message;
-        };
+{#        service.onmessage = function (event) {#}
+{#            console.log("get: " + event.data);#}
+{#            const input = JSON.parse(event.data);#}
+{#            console.log("parse: " + input.message);#}
+{#            bufferContent.value = input.message;#}
+{#        };#}
         service.onopen = function (event) {
             console.log(event);
             const payload = JSON.stringify({
@@ -39,11 +112,29 @@
         };
     }
 </script>
+
 <body>
 <div class="my-container">
     <h1 id="buffer-title">This is Buffer</h1>
-    <textarea id="buffer-textarea" class="read-textarea" rows="4" cols="150" readonly="true">
-    </textarea>
+    <table>
+    <tr>
+        <td>
+            <div id="myWrapper">
+                <form class="form">
+                    <div class="form-group">
+                        <label for="mode" class="control-label">Language Mode:</label>
+                        <select id="mode" class="form-control">
+                            <option>java</option>
+                            <option>haskell</option>
+                            <option>python</option>
+                        </select>
+                    </div>
+                </form>
+                <div id="code-reader"></div>
+            </div>
+        </td>
+    </tr>
+</table>
 </div>
 </body>
 </html>
