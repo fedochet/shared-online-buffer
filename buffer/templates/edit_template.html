@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
-
+{% load static %}
 <head>
     <title>Shared Buffer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 </head>
 
 <script type="text/javascript">
     const TEXT_CHANGE_TIMEOUT = 500;
-
     getIdFromPath = function () {
         const pathComponents = window.location.pathname.split('/');
         return pathComponents[pathComponents.length - 1];
     };
-
     window.onload = function () {
         const bufferTextarea = document.getElementById("buffer-textarea");
         const publicKeyHolder = document.getElementById("public_url");
-
         bufferTextarea.timeout = null;
         const service = new WebSocket("ws://" + window.location.host + "/buffer/edit");
         service.onopen = function (event) {
@@ -40,7 +40,6 @@
             console.log("parse: " + input.message);
             bufferTextarea.value = input.message;
         };
-
         bufferTextarea.onkeydown = function (e) {
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => {
@@ -56,18 +55,21 @@
 </script>
 
 <body>
-<table>
-    <tr><td>
-       <textarea id="buffer-textarea" rows="4" cols="50" maxlength="1000"></textarea>
-    </td></tr>
-    <tr><td>
-        <label id="public_url">Share this with your slaves:
-            <a href="/buffer/read/{{ public_key }}">
-                https://buffersonline.com/read/{{ public_key }}
-            </a>
-        </label>
-    </td></tr>
-</table>
+<div class="my-container">
+
+    <h1 id="buffer-title">This is {{ name }}</h1>
+    <textarea id="buffer-textarea" class="read-textarea" rows="4" cols="10" maxlength="1000">
+    </textarea>
+   </br>
+    </br>
+    </br>
+    <label id="public_url">Share this with your slaves:
+        <a href="/buffer/read/{{ public_key }}"> https://buffersonline.com/read/{{ public_key }}
+        </a>
+    </label>
+
+</div>
 </body>
 
 </html>
+

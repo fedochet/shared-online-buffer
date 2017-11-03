@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
+{% load static %}
 <head>
     <title>Shared Buffer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
 </head>
 
 <script type="text/javascript">
@@ -36,6 +40,13 @@
     }
 </script>
 <body>
-<textarea id="buffer-textarea" rows="4" cols="50" readonly="true"></textarea>
+<div class="my-container">
+    <h1 id="buffer-title">This is {{ name }}</h1>
+    <textarea id="buffer-textarea" class="read-textarea" rows="4" cols="150" readonly="true">
+    </textarea>
+    </br>
+</br>
+</div>
 </body>
 </html>
+

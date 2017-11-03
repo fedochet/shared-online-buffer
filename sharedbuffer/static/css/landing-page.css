@@ -1,0 +1,42 @@
+*, h1, h2, h3 {
+    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+}
+
+h3 {
+    color: #fff;
+}
+
+.btn {
+    min-width: 250px;
+    min-height: 50px;
+}
+
+body {
+    /*background-color: #6c757d;*/
+    background-color: #343a40;
+    text-align: center;
+    /*color: #fff;*/
+    padding-top: 10em;
+}
+
+body a {
+    color: #e0a800;
+}
+
+.buffer-link {
+    font-size: 150%;
+}
+
+h1 a .wrap {
+    color: #e0a800;
+}
+
+.new-buffer-btn {
+    background-color: #868e96;
+    border-color: #868e96;
+}
+
+a.new-buffer-btn:hover {
+    background: #e0a800;
+}
+

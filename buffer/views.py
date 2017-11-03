@@ -21,22 +21,28 @@ def index(request: HttpRequest) -> HttpResponse:
   
 def read(request: HttpRequest, public_token: str) -> HttpResponse:
     if lookup_public(public_token):
-         return render_to_response('read_template.html')
+         return render_to_response('read_template.html', {'name': lookup_public(public_token).name})
     else:
          return server_error('Public key is not valid')
 
 
 def edit(request: HttpRequest, private_token: str) -> HttpResponse:
     if lookup_private(private_token):
-         context = {'public_key': lookup_private(private_token).public}
+         obj = lookup_private(private_token)
+         context = {'public_key': obj.public,
+                    'name': obj.name}
          return render_to_response('edit_template.html', context=context)
     else:
          return server_error('Private key is not valid')
 
 
 def new(request: HttpRequest) -> HttpResponse:
-    new_id = create('', 'newrecord')
-    created_record = get(new_id)
+    if 'name' in request.GET.keys() :
+        new_id = create('', request.GET['name'])
+        created_record = get(new_id)
+    else:
+        new_id = create('', 'New Buffer')
+        created_record = get(new_id)
     return redirect('/buffer/edit/' + created_record.private)
 
 
