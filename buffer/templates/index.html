@@ -26,26 +26,19 @@
 <h1>
   <a href="" class="typewrite" data-period="2000" data-type='[ "Hi, I am Online Shared Buffer.", "I like Kuzya.", "I Love to Code.", "I Love Big Buffers." ]'>
     <span class="wrap"></span>
-    
-          
   </a>
-
-
 </h1>
-</br>
-<a href="#" type="button" class="btn btn-info btn-lg">Create buffer</a>
-</br>
-</br>
-</br>
-</br>
-</br>
+<br>
+<a href="new" type="button" class="btn btn-info btn-lg">Create buffer</a>
+<br>
+<br>
+<br>
+<br>
 <div>
 <h3> Last Shared Buffers </h3>
-<ul>
 {% for l in links %}
-    <li>  {{ l.name }}  <a href="/read/{{ l.public  }}"> http://buffer/read/{{ l.public }} </a></li>
+    {{ l.name }}  <a href="/buffer/read/{{ l.public  }}"> http://buffer/read/{{ l.public }} </a> <br>
 {% endfor %}
-</ul>
 </div>
 
 </body>
