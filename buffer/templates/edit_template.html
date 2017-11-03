@@ -19,7 +19,7 @@
 
         bufferTextarea.timeout = null;
         const service = new WebSocket("ws://" + window.location.host + "/buffer/edit");
-        service.onopen = function () {
+        service.onopen = function (event) {
             console.log(event);
             const payload = JSON.stringify({
                 role: 'editor',
@@ -58,7 +58,7 @@
 <body>
 <table>
     <tr><td>
-       <textarea id="buffer-textarea" rows="4" cols="50"></textarea>
+       <textarea id="buffer-textarea" rows="4" cols="50" maxlength="1000"></textarea>
     </td></tr>
     <tr><td>
         <label id="public_url">Share this with your slaves:

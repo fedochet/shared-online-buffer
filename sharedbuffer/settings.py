@@ -26,7 +26,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 LOGGING = {
     'version': 1,
@@ -132,6 +132,7 @@ STATICFILES_DIRS = (
 
 STATIC_URL = '/static/'
 SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+
 TEMPLATE_DIRS = (
     os.path.join(SETTINGS_PATH, 'templates'),
 )
