@@ -1,0 +1,24 @@
+body {
+  background-color:#ce3635;
+  text-align: center;
+  color:#fff;
+  padding-top:10em;
+}
+
+html {
+  font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+}
+
+.read-textarea {
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+  width:100%;
+}
+
+.my-container {
+  width: 50%; margin: 0 25% 0 25%
+}
+
+h1 {
+  float: left;
+}
