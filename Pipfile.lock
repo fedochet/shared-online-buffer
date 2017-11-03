@@ -1,19 +1,19 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bbd6c5cd1587df8925cd25ae248efc0a68daf96b9f3efac8dbdc0ccf8062efbd"
+            "sha256": "faaa640f2adad6031249b0cb97379264be7ffb4cd13d199129926f57f4aa2595"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
-            "implementation_version": "3.5.2",
+            "implementation_version": "3.4.3",
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "4.10.0-38-generic",
+            "platform_release": "3.19.0-15-generic",
             "platform_system": "Linux",
-            "platform_version": "#42~16.04.1-Ubuntu SMP Tue Oct 10 16:32:20 UTC 2017",
-            "python_full_version": "3.5.2",
-            "python_version": "3.5",
+            "platform_version": "#15-Ubuntu SMP Thu Apr 16 23:32:37 UTC 2015",
+            "python_full_version": "3.4.3",
+            "python_version": "3.4",
             "sys_platform": "linux"
         },
         "pipfile-spec": 6,
@@ -132,6 +132,14 @@
                 "sha256:484cd6c4cdd3f6081b87188f3b2b9a36e02fba6816e8256917c4f6571b567571"
             ],
             "version": "==2.8.2"
+        },
+        "typing": {
+            "hashes": [
+                "sha256:349b1f9c109c84b53ac79ac1d822eaa68fc91d63b321bd9392df15098f746f53",
+                "sha256:63a8255fe7c6269916baa440eb9b6a67139b0b97a01af632e7bd2842e1e02f15",
+                "sha256:d514bd84b284dd3e844f0305ac07511f097e325171f6cc4a20878d11ad771849"
+            ],
+            "version": "==3.6.2"
         },
         "zope.interface": {
             "hashes": [

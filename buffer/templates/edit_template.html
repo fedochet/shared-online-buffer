@@ -22,7 +22,7 @@
 
         bufferTextarea.timeout = null;
         const service = new WebSocket("ws://" + window.location.host + "/buffer/edit");
-        service.onopen = function () {
+        service.onopen = function (event) {
             console.log(event);
             const payload = JSON.stringify({
                 role: 'editor',
