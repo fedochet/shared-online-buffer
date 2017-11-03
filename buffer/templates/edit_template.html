@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
-{#    <link href="https://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"/>#}
 </head>
 
 <script src="https://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
@@ -100,7 +99,6 @@
         const codeEditor = document.getElementById("code-editor");
         const bufferTextarea = document.getElementById("buffer-textarea");
 
-{#        bufferTextarea.timeout = null;#}
         const service = new WebSocket("ws://" + window.location.host + "/buffer/edit");
         service.onopen = function (event) {
             console.log(event);
@@ -117,24 +115,6 @@
         service.onerror = function () {
             console.log("error");
         };
-        {#        service.onmessage = function (event) {#}
-        {#            console.log("sent data are: " + event.data);#}
-        {#            const input = JSON.parse(event.data);#}
-        {#            console.log("parse: " + input.message);#}
-        {#            bufferTextarea.value = input.message;#}
-        {#        };#}
-
-        {#        bufferTextarea.onkeydown = function (e) {#}
-        {#            clearTimeout(this.timeout);#}
-        {#            this.timeout = setTimeout(() => {#}
-        {#                const payload = JSON.stringify({#}
-        {#                    role: 'editor',#}
-        {#                    buffer_id: getIdFromPath(),#}
-        {#                    message: this.value#}
-        {#                });#}
-        {#                service.send(payload);#}
-        {#            }, TEXT_CHANGE_TIMEOUT);#}
-        {#        };#}
     };
 </script>
 

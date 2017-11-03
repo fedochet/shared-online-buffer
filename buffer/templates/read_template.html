@@ -9,7 +9,6 @@
 </head>
 
 <script src="https://cdn.alloyui.com/3.0.1/aui/aui-min.js"></script>
-{#<link href="https://cdn.alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet"/>#}
 
 <script type="text/javascript">
     getIdFromPath = function () {
@@ -71,7 +70,6 @@
                         function (event) {
                             currentMode = this.val();
                             reader.set('mode', currentMode);
-{#                            updateValue();#}
                         }
                     );
 
@@ -90,12 +88,6 @@
         const codeReader = document.getElementById("code-reader");
         const service = new WebSocket("ws://" + window.location.host + "/buffer/read");
         const bufferContent = document.getElementById('buffer-textarea');
-{#        service.onmessage = function (event) {#}
-{#            console.log("get: " + event.data);#}
-{#            const input = JSON.parse(event.data);#}
-{#            console.log("parse: " + input.message);#}
-{#            bufferContent.value = input.message;#}
-{#        };#}
         service.onopen = function (event) {
             console.log(event);
             const payload = JSON.stringify({
