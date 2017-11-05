@@ -25,7 +25,7 @@
                     {
                         boundingBox: '#code-editor',
                         mode: 'java',
-                        value: 'System.out.println(System.in.getln(System.what.isit("kakoune\\n")))',
+                        value: '',
                         width: screen.width / 2,
                         height: screen.height / 4
                     }
@@ -34,40 +34,13 @@
                 const mode = Y.one('#mode');
 
                 if (mode) {
-                    const contents = {
-                        haskell: 'newtype Arr2 e1 e2 a = Arr2 { getArr2 :: e1 -> e2 -> a }\n' +
-                        'newtype Arr3 e1 e2 e3 a = Arr3 { getArr3 :: e1 -> e2 -> e3 -> a }\n' +
-                        '\n' +
-                        'instance Functor (Arr2 e1 e2) where\n' +
-                        '  fmap f (Arr2 g) = Arr2 (((.) . (.)) f g)\n' +
-                        '\n' +
-                        'instance Functor (Arr3 e1 e2 e3) where\n' +
-                        '  fmap f (Arr3 g) = Arr3 (((.) . (.) . (.)) f g)\n' +
-                        '\n' +
-                        'instance Applicative (Arr2 e1 e2) where\n' +
-                        '  pure x = Arr2 (\\e1 e2 -> x)\n' +
-                        '  -- (<*>) :: (e1 -> e2 -> a -> b) -> (e1 -> e2 -> a) -> (e1 -> e2 -> b)\n' +
-                        '  (<*>) (Arr2 f) (Arr2 g) = Arr2 (\\e1 e2 -> f e1 e2 (g e1 e2))\n' +
-                        '\n' +
-                        'instance Applicative (Arr3 e1 e2 e3) where\n' +
-                        '  pure x = Arr3 (\\e1 e2 e3 -> x)\n' +
-                        '  (<*>) (Arr3 f) (Arr3 g) = Arr3 (\\e1 e2 e3 -> f e1 e2 e3 (g e1 e2 e3))\n',
-                        java: 'System.out.println(System.in.getln(System.what.isit("kakoune\\n")))',
-                        python: 'print(peremennaya6, functsiya(massiv[5,81764]))'
-                    };
-
                     let currentMode = 'java';
-
-                    const updateValue = function () {
-                        editor.set('value', contents[currentMode]);
-                    };
 
                     mode.on(
                         'change',
                         function (event) {
                             currentMode = this.val();
                             editor.set('mode', currentMode);
-                            updateValue();
                         }
                     );
                 }
