@@ -13,5 +13,5 @@ def index(request: HttpRequest) -> HttpResponse:
          links = Text.objects.all()
     else:
          links = Text.objects.all()
-    return render_to_response('index.html', {'links': links})
+    return render_to_response('indexmain.html', {'links': links})
 

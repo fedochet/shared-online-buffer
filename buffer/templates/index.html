@@ -14,7 +14,7 @@
 
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"
           rel="stylesheet">
-    <link href="{% static 'css/typing.css' %}" rel="stylesheet">
+   <link href="{% static 'css/typing.css' %}" rel="stylesheet">
     <link href="{% static 'css/landing-page.css' %}" rel="stylesheet">
     <script src="{% static 'js/typing.js' %}"></script>
     <!-- Bootstrap core CSS -->
@@ -29,18 +29,42 @@
     </a>
 </h1>
 <br>
-<a href="new" class="btn btn-info btn-lg new-buffer-btn">Create buffer</a>
 <br>
-<br>
-<br>
-<br>
-<h3> Recently Shared Buffers </h3>
-    {% for l in links %}
-        <div class="buffer-link">
-        <a href="/buffer/edit/{{ l.private }}">
-        http://buffer/edit/{{ l.private }} </a> <br>
-        </div>
-    {% endfor %}
+<div id="name">
+<form action="new">
+ <div class="form-group">
 
+
+ <div class="form-group">
+
+    <label for="name">Type new buffer name:</label>
+<div class="row">
+    <div class="col-sm-offset-4 col-sm-4">
+    </div>
+    <div class="col-sm-offset-4 col-sm-4">
+        <div class="input-group">
+            <input type="text" name="name" class="form-control" placeholder="Type new name here....." />
+        </div>
+    </div>
+</div>
+  </div>
+
+<input type="submit" id="createnew" class="btn btn-info btn-lg" value="Create buffer" />
+<br>
+<br>
+
+</div>
+</form>
+</div>
+<br>
+<br>
+<div>
+<h3> Last Shared Buffers </h3>
+{% for l in links %}
+    {{ l.name }}  <a href="/buffer/edit/{{ l.private  }}"> http://buffer/edit/{{ l.private }} </a> <br>
+{% endfor %}
+</div>
+<script>
+</script>
 </body>
 </html>
