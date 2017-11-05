@@ -12,12 +12,10 @@
 
 <script type="text/javascript">
     const TEXT_CHANGE_TIMEOUT = 500;
-
     getIdFromPath = function () {
         const pathComponents = window.location.pathname.split('/');
         return pathComponents[pathComponents.length - 1];
     };
-
     window.onload = function () {
 
         YUI().use(
@@ -121,12 +119,12 @@
 <body>
 <div class="my-container">
 
-    <h1 id="buffer-title">This is Buffer</h1>
+    <h1 id="buffer-title">This is {{ name }}</h1>
     <table>
         <tr>
             <td>
                 <div id="myWrapper">
-                    <form class="form">
+                    <form class="form" maxlength="1000">
                         <div class="form-group">
                             <label for="mode" class="control-label">Language Mode:</label>
                             <select id="mode" class="form-control">
@@ -141,9 +139,11 @@
             </td>
         </tr>
     </table>
+   </br>
+    </br>
+    </br>
     <label id="public_url">Share this with your slaves:
-        <a href="/buffer/read/{{ public_key }}">
-            https://buffersonline.com/read/{{ public_key }}
+        <a href="/buffer/read/{{ public_key }}"> https://buffersonline.com/read/{{ public_key }}
         </a>
     </label>
 
@@ -151,3 +151,4 @@
 </body>
 
 </html>
+

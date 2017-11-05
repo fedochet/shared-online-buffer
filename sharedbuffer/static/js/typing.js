@@ -1,4 +1,3 @@
-//made by vipul mirajkar thevipulm.appspot.com
 var TxtType = function(el, toRotate, period) {
         this.toRotate = toRotate;
         this.el = el;
