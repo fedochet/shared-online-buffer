@@ -5,6 +5,7 @@
     <title>Shared Buffer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
 </head>
 
@@ -28,7 +29,7 @@
                         boundingBox: '#code-reader',
                         mode: 'java',
                         value: 'System.out.println(System.in.getln(System.what.isit("kakoune\\n")))',
-                        width: screen.width / 2,
+                        width: '100%',
                         height: screen.height / 4,
                         readOnly: true
                     }
@@ -106,29 +107,37 @@
 </script>
 
 <body>
-<div class="my-container">
-    <h1 id="buffer-title">This is {{ name }}</h1>
-    <table>
-    <tr>
-        <td>
+<div class="container">
+    <div class="row">
+        <div class="d-none d-lg-block" style="padding-top: 10em">
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-lg-2 col-lg-8 col-sm-12">
+            <h1 id="buffer-title">{{ name }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-lg-2 col-lg-8 col-sm-12">
+            <form class="form" maxlength="1000">
+                <div class="form-group">
+                    <label for="mode" class="control-label">Language Mode:</label>
+                    <select id="mode" class="form-control">
+                        <option>java</option>
+                        <option>haskell</option>
+                        <option>python</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-lg-2 col-lg-8 col-sm-12">
             <div id="myWrapper">
-                <form class="form">
-                    <div class="form-group">
-                        <label for="mode" class="control-label">Language Mode:</label>
-                        <select id="mode" class="form-control">
-                            <option>java</option>
-                            <option>haskell</option>
-                            <option>python</option>
-                        </select>
-                    </div>
-                </form>
                 <div id="code-reader"></div>
             </div>
-        </td>
-    </tr>
-</table>
-    </br>
-</br>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -11,13 +11,16 @@ h1, h2, h3 {
 
 body {
     background-color: #343a40;
-    text-align: center;
     color: #fff;
-    padding-top: 10em;
+    padding-top: 2em;
 }
 
-html {
+body {
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+}
+
+#code-editor, #code-reader {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
 }
 
 .read-textarea {
